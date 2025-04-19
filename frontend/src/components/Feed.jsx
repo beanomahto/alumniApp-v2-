@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import { Heart, MessageCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-
-// const posts=()=>{
-  
-// }
 const dummyPosts = [
   {
     id: 1,

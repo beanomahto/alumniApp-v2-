@@ -72,12 +72,7 @@ const App = () => {
           }
         />
         <Route path="/directory" element={<DirectoryPage />} />
-        <Route
-          path="/profile/:id"
-          element={
-            isAuthenticated ? <ProfilePage user={user} /> : <LoginPage />
-          }
-        />
+        <Route path="/profile/:id" element={<ProfilePage user={user} />} />
         <Route path="/feed" element={<FeedPage />} />
       </Routes>
     </>
