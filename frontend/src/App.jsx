@@ -1,49 +1,87 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import DirectoryPage from "./pages/DirectoryPage";
-import ProfilePage from "./pages/ProfilePage";
-import FeedPage from "./pages/FeedPage";
+import React, { useState, useEffect } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import LoginPage from './pages/LoginPage'
+import SignUpPage from './pages/SignUpPage'
+import DirectoryPage from './pages/DirectoryPage'
+import ProfilePage from './pages/ProfilePage'
+import FeedPage from './pages/FeedPage'
+import Home from './components/Home'
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Check if there's an authentication token stored in localStorage
+    const token = localStorage.getItem('authToken')
+    const storedUser = JSON.parse(localStorage.getItem('user'))
+
+    if (token) {
+      setIsAuthenticated(true)
+      setUser(storedUser)
+    } else {
+      setIsAuthenticated(false)
+    }
+  }, [])
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => {
-      const newMode = !prev;
+      const newMode = !prev
       if (newMode) {
-        document.documentElement.classList.add("dark");
+        document.documentElement.classList.add('dark')
       } else {
-        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.remove('dark')
       }
-      return newMode;
-    });
-  };
+      return newMode
+    })
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('user')
+    setIsAuthenticated(false)
+    setUser(null)
+    navigate('/login')
+  }
 
   return (
-    <Router>
-      <Navbar />
+    <>
+      <Navbar
+        toggleDarkMode={toggleDarkMode}
+        darkMode={darkMode}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        handleLogout={handleLogout}
+      />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
-          path='/login'
+          path="/login"
           element={
             <LoginPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
           }
         />
         <Route
-          path='/signup'
+          path="/signup"
           element={
             <SignUpPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
           }
         />
-        <Route path='/directory' element={<DirectoryPage />} />
-        <Route path='/profile/:id' element={<ProfilePage />} />
-        <Route path='/feed' element={<FeedPage />} />
+        <Route path="/directory" element={<DirectoryPage />} />
+        <Route
+          path="/profile/:id"
+          element={
+            isAuthenticated ? <ProfilePage user={user} /> : <LoginPage />
+          }
+        />
+        <Route path="/feed" element={<FeedPage />} />
       </Routes>
-    </Router>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App

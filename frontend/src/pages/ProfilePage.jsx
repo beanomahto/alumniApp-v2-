@@ -1,48 +1,22 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Profile from "../components/Profile";
-import axios from "axios";
-
-// const dummyUser = {
-//   name: "John Doe",
-//   email: "john@example.com",
-//   batch: 2020,
-//   branch: "Computer Science",
-//   jobTitle: "Software Engineer",
-//   company: "Google",
-//   location: "California",
-//   bio: "Passionate about building scalable systems.",
-//   profilePicture: "https://randomuser.me/api/portraits/men/32.jpg",
-//   tags: ["React", "Node.js", "MongoDB"],
-//   socialLinks: {
-//     linkedin: "https://linkedin.com/in/johndoe",
-//     github: "https://github.com/johndoe",
-//     twitter: "https://twitter.com/johndoe",
-//   },
-// };
+import { useUser } from '../contexts/userContext'
+import Profile from '../components/Profile'
 
 const ProfilePage = () => {
-  const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const { selectedUser } = useUser()
 
-  useEffect(() => {
-    async function fetchUsers() {
-      try {
-        const response = await axios.get(`http://localhost:8000/api/users/profile/${id}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    }
-
-    fetchUsers();
-  }, [id]);
+  if (!selectedUser) {
+    return (
+      <div className="text-center mt-10 text-red-500">No user selected</div>
+    )
+  }
 
   return (
-    <div className='min-h-screen bg-gray-100 py-10 px-4'>
-      <Profile user={user} />
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
+        <Profile user={selectedUser} />
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfilePage;
+export default ProfilePage

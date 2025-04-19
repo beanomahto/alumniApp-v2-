@@ -1,51 +1,28 @@
-import React, { useState } from "react";
-import Directory from "../components/Directory";
-import axios from "axios";
-
-// const dummyData = [
-//   {
-//     id: 1,
-//     name: "John Doe",
-//     profilePicture: "https://randomuser.me/api/portraits/men/1.jpg",
-//   },
-//   {
-//     id: 2,
-//     name: "Jane Smith",
-//     profilePicture: "https://randomuser.me/api/portraits/women/2.jpg",
-//   },
-//   {
-//     id: 3,
-//     name: "Mark Johnson",
-//     profilePicture: "https://randomuser.me/api/portraits/men/3.jpg",
-//   },
-//   {
-//     id: 4,
-//     name: "Emily Davis",
-//     profilePicture: "https://randomuser.me/api/portraits/women/4.jpg",
-//   },
-// ];
+import React, { useState } from 'react'
+import Directory from '../components/Directory'
+import axios from 'axios'
 
 const DirectoryPage = () => {
-  const [users, setUsers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [users, setUsers] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
   const [filters, setFilters] = useState({
-    batch: "",
-    branch: "",
-    company: "",
-    location: "",
-    jobTitle: "",
-    tags: "",
-  });
-  const [sortBy, setSortBy] = useState("");
+    batch: '',
+    branch: '',
+    company: '',
+    location: '',
+    jobTitle: '',
+    tags: '',
+  })
+  const [sortBy, setSortBy] = useState('')
 
   const handleInputChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
+    setFilters({ ...filters, [e.target.name]: e.target.value })
+  }
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/users/search",
+        'http://localhost:8000/api/users/search',
         {
           params: {
             name: searchQuery,
@@ -53,98 +30,67 @@ const DirectoryPage = () => {
             sortBy,
           },
         }
-      );
-      console.log("Fetched data:", response.data);
-      setUsers(response.data.users); 
+      )
+      console.log('Fetched data:', response.data)
+      setUsers(response.data.users)
     } catch (error) {
-      console.error("Search failed", error);
+      console.error('Search failed', error)
     }
-  };
+  }
 
   return (
-    <div className='min-h-screen bg-gray-50 p-4'>
-      <div className='max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-4'>
-        <h1 className='text-3xl font-bold text-center mb-4'>Directory</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md space-y-4">
+        <h1 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-4">
+          Directory
+        </h1>
 
         <input
-          type='text'
-          placeholder='Search by name...'
+          type="text"
+          placeholder="Search by name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
 
         {/* Filters */}
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-          <input
-            type='text'
-            name='batch'
-            placeholder='Batch'
-            value={filters.batch}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
-          <input
-            type='text'
-            name='branch'
-            placeholder='Branch'
-            value={filters.branch}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
-          <input
-            type='text'
-            name='company'
-            placeholder='Company'
-            value={filters.company}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
-          <input
-            type='text'
-            name='location'
-            placeholder='Location'
-            value={filters.location}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
-          <input
-            type='text'
-            name='jobTitle'
-            placeholder='Job Title'
-            value={filters.jobTitle}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
-          <input
-            type='text'
-            name='tags'
-            placeholder='Tags (comma separated)'
-            value={filters.tags}
-            onChange={handleInputChange}
-            className='px-3 py-2 border rounded'
-          />
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {['batch', 'branch', 'company', 'location', 'jobTitle', 'tags'].map(
+            (field) => (
+              <input
+                key={field}
+                type="text"
+                name={field}
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                value={filters[field]}
+                onChange={handleInputChange}
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded"
+              />
+            )
+          )}
         </div>
 
         {/* Sorting */}
-        <div className='flex justify-between items-center mt-2'>
-          <label className='font-medium'>Sort by:</label>
+        <div className="flex justify-between items-center mt-2">
+          <label className="font-medium text-gray-700 dark:text-gray-300">
+            Sort by:
+          </label>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className='px-3 py-2 border rounded'
+            className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded"
           >
-            <option value=''>None</option>
-            <option value='batch'>Batch</option>
-            <option value='branch'>Branch</option>
-            <option value='company'>Company</option>
-            <option value='location'>Location</option>
+            <option value="">None</option>
+            <option value="batch">Batch</option>
+            <option value="branch">Branch</option>
+            <option value="company">Company</option>
+            <option value="location">Location</option>
           </select>
         </div>
 
         <button
           onClick={handleSearch}
-          className='w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition'
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
           Search
         </button>
@@ -152,7 +98,7 @@ const DirectoryPage = () => {
         <Directory users={users} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DirectoryPage;
+export default DirectoryPage

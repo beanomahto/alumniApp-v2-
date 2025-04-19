@@ -7,6 +7,7 @@ const router = express.Router();
 const {
   searchUsers,
   getUserProfile,
+  getUserProfileById,
   //createPost
 } = require("../controllers/userController");
 
@@ -73,7 +74,7 @@ router.get("/directory", protect, async (req, res) => {
 // userRoutes.js
 router.get("/search", searchUsers);
 router.get("/profile", protect, getUserProfile);
-router.get("/profile/:id", getUserProfile);
+router.get("/profile/:id", getUserProfileById);
 
 //router.post("/posts", protect, createPost); // Create a post
 // Add more here later...

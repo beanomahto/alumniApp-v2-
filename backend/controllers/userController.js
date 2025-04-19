@@ -93,7 +93,7 @@ const getUserProfileById = async (req, res) => {
   console.log("All users:", allUsers); // Log all users to check if the user exists
 
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.params.id).select("-password");
     if (user) {
       res.json({
         _id: user._id,
@@ -156,7 +156,8 @@ const getUserProfileById = async (req, res) => {
 
 module.exports = {
   searchUsers,
-  getUserProfile
+  getUserProfile,
+  getUserProfileById
   // createPost,
   // other functions
 };
