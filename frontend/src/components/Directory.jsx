@@ -16,7 +16,7 @@ const Directory = ({ users = [] }) => {
           className='flex items-center space-x-4 cursor-pointer hover:bg-gray-100 p-2 rounded transition'
         >
           <img
-            src={user.profilePicture || ""}
+            src={user.profilePicture || null}
             alt={user.name}
             className='w-12 h-12 rounded-full object-cover'
           />
