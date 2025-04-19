@@ -8,7 +8,9 @@ const {
   searchUsers,
   getUserProfile,
   getUserProfileById,
-  //createPost
+  createPost,
+  getUserPost,
+  getAllPosts,
 } = require("../controllers/userController");
 
 //CREATE USER
@@ -78,7 +80,9 @@ router.get("/profile", protect, getUserProfile);
 router.get("/profile/:id", getUserProfileById);
 
 
-//router.post("/posts", protect, createPost); // Create a post
+router.post("/posts", protect, createPost); // Create a post
+router.get("/posts", protect, getUserPost); // Get all posts
+router.get("/posts/all", getAllPosts); // Get all posts
 // Add more here later...
 
 //UPDATE USER

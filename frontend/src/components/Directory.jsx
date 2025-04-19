@@ -1,11 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Directory = ({ users = [] }) => {
   const navigate = useNavigate();
 
-  const handleUserClick = (id) => {
-    window.location.href = `http://localhost:8000/api/users/profile/${id}`;
-    navigate(`/profile/${id}`); // Uncomment this line if you want to use react-router for navigation
+  const handleUserClick = async (e) => {
+    // window.location.href = `http://localhost:8000/api/users/profile/${id}`;
+    // navigate(`/profile/${id}`); // Uncomment this line if you want to use react-router for navigation
+    // console.log(e);
+    const res = await axios.get(`http://localhost:8000/api/users/profile/${e}`)
+    navigate(`/profile/${e}`); // Uncomment this line if you want to use react-router for navigation  
+    console.log(res.data);
+    
   };
 
   return (
