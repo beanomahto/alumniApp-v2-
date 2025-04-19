@@ -87,6 +87,29 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+const getUserProfileById = async (req, res) => {
+  const { id } = req.params;
+  const allUsers = await User.find({id});
+  console.log("All users:", allUsers); // Log all users to check if the user exists
+
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        // Add more fields as needed
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error fetching profile" });
+  }
+};
+
 
 // const Post = require("../models/Post");
 
