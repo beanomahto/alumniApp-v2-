@@ -3,9 +3,9 @@ import { Heart, MessageCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 
-const posts=()=>{
+// const posts=()=>{
   
-}
+// }
 const dummyPosts = [
   {
     id: 1,

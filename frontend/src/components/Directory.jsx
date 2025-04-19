@@ -1,17 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useUser } from '../contexts/userContext'
+// import { useUser } from '../contexts/userContext'
 
 const Directory = ({ users = [] }) => {
   const navigate = useNavigate()
-  const { setSelectedUser } = useUser()
+  // const { setSelectedUser } = useUser()
 
   const handleUserClick = async (id) => {
+    console.log('User clicked:', id)
     try {
       const response = await axios.get(
         `http://localhost:8000/api/users/profile/${id}`
       )
-      setSelectedUser(response.data)
+      console.log('Fetched user profile:', response)
+      // setSelectedUser(response.data)
       navigate(`/profile/${id}`)
     } catch (error) {
       console.error('Failed to fetch user profile:', error)
