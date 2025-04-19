@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -17,7 +19,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/api/auth/signin", formData);
+      await axios.post(`${baseURL}/auth/signin`, formData);
       alert("Login successful!");
     } catch (err) {
       alert("Login failed. Please check your credentials.", err);
