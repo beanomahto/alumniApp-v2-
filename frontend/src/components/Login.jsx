@@ -1,31 +1,31 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await axios.post('/api/auth/login', formData)
-      alert('Login successful!')
+      await axios.post("http://localhost:8000/api/auth/signin", formData);
+      alert("Login successful!");
     } catch (err) {
-      alert('Login failed. Please check your credentials.', err)
+      alert("Login failed. Please check your credentials.", err);
     }
-  }
+  };
 
   const inputClasses =
-    'px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+    "px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400";
 
   return (
     <div className="bg-gray-50 flex flex-col px-4">
@@ -70,7 +70,7 @@ const Login = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

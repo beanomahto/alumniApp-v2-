@@ -1,130 +1,130 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useState } from "react";
+import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    batch: '',
-    branch: '',
-    jobTitle: '',
-    company: '',
-    location: '',
-    bio: '',
-    profilePicture: '',
-    linkedin: '',
-    github: '',
-    twitter: '',
-    tags: '',
-  })
+    name: "",
+    email: "",
+    password: "",
+    batch: "",
+    branch: "",
+    jobTitle: "",
+    company: "",
+    location: "",
+    bio: "",
+    profilePicture: "",
+    linkedin: "",
+    github: "",
+    twitter: "",
+    tags: "",
+  });
 
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const payload = {
       ...formData,
-      tags: formData.tags.split(',').map((tag) => tag.trim()),
+      tags: formData.tags.split(",").map((tag) => tag.trim()),
       socialLinks: {
         linkedin: formData.linkedin,
         github: formData.github,
         twitter: formData.twitter,
       },
-    }
+    };
 
     try {
-      await axios.post('/api/auth/signup', payload)
-      alert('Signup successful!')
+      await axios.post("http://localhost:8000/api/auth/signup", payload);
+      alert("Signup successful!");
     } catch (err) {
-      alert('Signup failed.', err)
+      alert("Signup failed.", err);
     }
-  }
+  };
 
   const inputClasses =
-    'w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+    "w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400";
 
   const fields = [
-    { name: 'name', type: 'text', required: true, placeholder: 'ex: John Doe' },
+    { name: "name", type: "text", required: true, placeholder: "ex: John Doe" },
     {
-      name: 'email',
-      type: 'email',
+      name: "email",
+      type: "email",
       required: true,
-      placeholder: 'ex: john@example.com',
+      placeholder: "ex: john@example.com",
     },
     {
-      name: 'password',
-      type: 'password',
+      name: "password",
+      type: "password",
       required: true,
-      placeholder: 'ex: secret123',
+      placeholder: "ex: secret123",
     },
-    { name: 'batch', type: 'number', required: false, placeholder: 'ex: 2020' },
+    { name: "batch", type: "number", required: false, placeholder: "ex: 2020" },
     {
-      name: 'branch',
-      type: 'text',
+      name: "branch",
+      type: "text",
       required: false,
-      placeholder: 'ex: Computer Science',
-    },
-    {
-      name: 'jobTitle',
-      type: 'text',
-      required: false,
-      placeholder: 'ex: Software Engineer',
+      placeholder: "ex: Computer Science",
     },
     {
-      name: 'company',
-      type: 'text',
+      name: "jobTitle",
+      type: "text",
       required: false,
-      placeholder: 'ex: Google',
+      placeholder: "ex: Software Engineer",
     },
     {
-      name: 'location',
-      type: 'text',
+      name: "company",
+      type: "text",
       required: false,
-      placeholder: 'ex: Bangalore, India',
+      placeholder: "ex: Google",
     },
     {
-      name: 'bio',
-      type: 'text',
+      name: "location",
+      type: "text",
       required: false,
-      placeholder: 'ex: Passionate coder and traveler',
+      placeholder: "ex: Bangalore, India",
     },
     {
-      name: 'profilePicture',
-      type: 'text',
+      name: "bio",
+      type: "text",
       required: false,
-      placeholder: 'ex: https://link.to/photo.jpg',
+      placeholder: "ex: Passionate coder and traveler",
     },
     {
-      name: 'linkedin',
-      type: 'text',
+      name: "profilePicture",
+      type: "text",
       required: false,
-      placeholder: 'ex: https://linkedin.com/in/username',
+      placeholder: "ex: https://link.to/photo.jpg",
     },
     {
-      name: 'github',
-      type: 'text',
+      name: "linkedin",
+      type: "text",
       required: false,
-      placeholder: 'ex: https://github.com/username',
+      placeholder: "ex: https://linkedin.com/in/username",
     },
     {
-      name: 'twitter',
-      type: 'text',
+      name: "github",
+      type: "text",
       required: false,
-      placeholder: 'ex: https://twitter.com/username',
+      placeholder: "ex: https://github.com/username",
     },
     {
-      name: 'tags',
-      type: 'text',
+      name: "twitter",
+      type: "text",
       required: false,
-      placeholder: 'ex: React, Node.js, Alumni',
+      placeholder: "ex: https://twitter.com/username",
     },
-  ]
+    {
+      name: "tags",
+      type: "text",
+      required: false,
+      placeholder: "ex: React, Node.js, Alumni",
+    },
+  ];
 
   return (
     <div className="max-w-xl w-full bg-white shadow-md p-6 rounded-xl border">
@@ -143,7 +143,7 @@ const SignUp = () => {
               onChange={handleChange}
               placeholder={field.placeholder}
               className={`${inputClasses} ${
-                field.name === 'batch' ? 'appearance-none' : ''
+                field.name === "batch" ? "appearance-none" : ""
               }`}
             />
           </div>
@@ -157,7 +157,7 @@ const SignUp = () => {
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
