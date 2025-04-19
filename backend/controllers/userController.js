@@ -89,11 +89,9 @@ const getUserProfile = async (req, res) => {
 
 const getUserProfileById = async (req, res) => {
   const { id } = req.params;
-  const allUsers = await User.find({id});
-  console.log("All users:", allUsers); // Log all users to check if the user exists
-
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(id).select("-password");
+    console.log(id);
     if (user) {
       res.json({
         _id: user._id,
@@ -109,7 +107,6 @@ const getUserProfileById = async (req, res) => {
     res.status(500).json({ message: "Server error fetching profile" });
   }
 };
-
 
 // const Post = require("../models/Post");
 
@@ -127,8 +124,6 @@ const getUserProfileById = async (req, res) => {
 //     res.status(500).json({ message: "Failed to create post" });
 //   }
 // };
-
-
 
 // const getUserPost = async (req, res) => {
 //   const allUsers = await Post.find({});
@@ -152,11 +147,10 @@ const getUserProfileById = async (req, res) => {
 //   }
 // };
 
-
-
 module.exports = {
   searchUsers,
-  getUserProfile
+  getUserProfile,
+  getUserProfileById,
   // createPost,
   // other functions
 };

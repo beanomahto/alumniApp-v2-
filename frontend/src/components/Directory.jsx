@@ -4,23 +4,24 @@ const Directory = ({ users = [] }) => {
   const navigate = useNavigate();
 
   const handleUserClick = (id) => {
-    navigate(`http://localhost:8000/api/users/profile/${id}`);
+    window.location.href = `http://localhost:8000/api/users/profile/${id}`;
+    navigate(`/profile/${id}`); // Uncomment this line if you want to use react-router for navigation
   };
 
   return (
-    <div className='space-y-4'>
+    <div className="space-y-4">
       {users.map((user) => (
         <div
           key={user._id}
           onClick={() => handleUserClick(user._id)}
-          className='flex items-center space-x-4 cursor-pointer hover:bg-gray-100 p-2 rounded transition'
+          className="flex items-center space-x-4 cursor-pointer hover:bg-gray-100 p-2 rounded transition"
         >
           <img
             src={user.profilePicture || null}
             alt={user.name}
-            className='w-12 h-12 rounded-full object-cover'
+            className="w-12 h-12 rounded-full object-cover"
           />
-          <span className='font-semibold'>{user.name}</span>
+          <span className="font-semibold">{user.name}</span>
         </div>
       ))}
     </div>
