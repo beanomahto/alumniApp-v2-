@@ -22,6 +22,7 @@ exports.registerUser = async (req, res) => {
     bio,
     profilePicture,
     socialLinks,
+    tags,
   } = req.body;
 
   try {
@@ -42,6 +43,7 @@ exports.registerUser = async (req, res) => {
       bio,
       profilePicture,
       socialLinks,
+      tags,
     });
 
     res.status(201).json({
