@@ -89,8 +89,8 @@ const App = () => {
           }
         />
         <Route path="/directory" element={<DirectoryPage />} />
-        <Route path="/profile/:id" element={<ProfilePage user={user} />} />
-        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/profile/:id" element={<ProfilePage user={user} handleLogout={handleLogout} />} />
+        <Route path="/feed" element={<FeedPage isAuthenticated={isAuthenticated} />} />
       </Routes>
     </>
   )

@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import Profile from '../components/Profile'
 import axios from 'axios'
 
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL
 // const dummyUser = {
 //   name: "John Doe",
 //   email: "john@example.com",
@@ -23,16 +22,14 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 //   },
 // };
 
-const ProfilePage = () => {
+const ProfilePage = ({ handleLogout }) => {
   const { id } = useParams()
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await axios.get(
-          `${baseURL}/users/profile/${id}`
-        )
+        const response = await axios.get(`${baseURL}/users/profile/${id}`)
         setUser(response.data)
       } catch (error) {
         console.error('Error fetching users:', error)
@@ -43,8 +40,8 @@ const ProfilePage = () => {
   }, [id])
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <Profile user={user} />
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-4">
+      <Profile user={user} handleLogout={handleLogout} />
     </div>
   )
 }

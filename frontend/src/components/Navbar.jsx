@@ -2,13 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
-const Navbar = ({
-  toggleDarkMode,
-  darkMode,
-  isAuthenticated,
-  user,
-  handleLogout,
-}) => {
+const Navbar = ({ toggleDarkMode, darkMode, isAuthenticated, user }) => {
   return (
     <nav className="p-4 bg-white dark:bg-gray-800 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto">
@@ -29,7 +23,7 @@ const Navbar = ({
           </button>
 
           {/* Navigation Tabs */}
-          <div className="space-x-4">
+          <div className="flex items-center gap-4 whitespace-nowrap">
             <Link
               to="/feed"
               className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
@@ -68,17 +62,11 @@ const Navbar = ({
                   {/* Profile Image Icon */}
                   <img
                     src={user?.img || '/default-avatar.png'}
-                    // alt="Profile"
-                    className="w-8 h-8 rounded-full mr-2"
+                    alt={user?.name || 'User profile'}
+                    className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600 hover:border-blue-500 transition-all duration-200"
                   />
                   {/* Profile */}
                 </Link>
-                <button
-                  onClick={handleLogout}
-                  className="text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  Logout
-                </button>
               </div>
             )}
           </div>
