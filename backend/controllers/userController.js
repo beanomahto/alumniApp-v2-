@@ -181,14 +181,84 @@ const getUserPost = async (req, res) => {
   }
 };
 
+// const getAllPosts = async (req, res) => {
+//   try {
+//     const posts = await Post.find({}).populate("user", "name email"); // Populate user details
+//     res.status(200).json(posts);
+//   } catch (err) {
+//     res.status(500).json({ message: "Failed to fetch posts"});
+//   }
+// }
+
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).populate("user", "name email"); // Populate user details
-    res.status(200).json(posts);
+    // Get page and limit from query, default to page 1, 4 posts per page
+    const page = parseInt(req.query.page) || 1;
+    const limit = 4;
+    const skip = (page - 1) * limit;
+
+    // Find posts, sort by createdAt ascending, paginate, and populate user info
+    const posts = await Post.find({})
+      .sort({ createdAt: 1 }) // Ascending order
+      .skip(skip)
+      .limit(limit)
+      .populate("user", "name email");
+
+    const total = await Post.countDocuments();
+
+    res.status(200).json({
+      posts,
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch posts" });
-  }
+    res.status(500).json({ message: "Failed to fetch posts" });
+  }
 }
+
+
+// Like a post
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    // Prevent duplicate likes
+    if (post.likes.includes(req.user.id)) {
+      return res.status(400).json({ message: "You already liked this post" });
+    }
+
+    post.likes.push(req.user.id);
+    await post.save();
+    res.status(200).json({ message: "Post liked", likes: post.likes.length });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to like post" });
+  }
+};
+
+// Add a comment to a post
+const commentOnPost = async (req, res) => {
+  try {
+    const { text } = req.body;
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const comment = {
+      user: req.user.id,
+      text,
+      createdAt: new Date(),
+    };
+
+    post.comments.push(comment);
+    await post.save();
+    res.status(201).json({ message: "Comment added", comments: post.comments });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to add comment" });
+  }
+};
+
+
 module.exports = {
   searchUsers,
   getUserProfile,
@@ -196,5 +266,7 @@ module.exports = {
   createPost,
   getUserPost,
   getAllPosts,
+  likePost,
+  commentOnPost,
   // other functions
 };
