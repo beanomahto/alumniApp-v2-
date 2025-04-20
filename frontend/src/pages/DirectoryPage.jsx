@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Directory from '../components/Directory'
 import axios from 'axios'
+import dotenv from 'dotenv'
+
+// dotenv.config()
 
 const DirectoryPage = () => {
   const [users, setUsers] = useState([])
@@ -22,7 +25,7 @@ const DirectoryPage = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/api/users/search',
+        `${import.meta.env.VITE_API_BASE_URL}/api/users/search`,
         {
           params: {
             name: searchQuery,

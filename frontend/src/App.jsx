@@ -16,15 +16,27 @@ const App = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Check if there's an authentication token stored in localStorage
     const token = localStorage.getItem('authToken')
-    const storedUser = JSON.parse(localStorage.getItem('user'))
+    const storedUserRaw = localStorage.getItem('user')
 
-    if (token) {
-      setIsAuthenticated(true)
-      setUser(storedUser)
+    if (
+      token &&
+      storedUserRaw &&
+      storedUserRaw !== 'undefined' &&
+      storedUserRaw !== 'null'
+    ) {
+      try {
+        const storedUser = JSON.parse(storedUserRaw)
+        setIsAuthenticated(true)
+        setUser(storedUser)
+      } catch (e) {
+        console.error('Failed to parse user from localStorage:', e)
+        setIsAuthenticated(false)
+        setUser(null)
+      }
     } else {
       setIsAuthenticated(false)
+      setUser(null)
     }
   }, [])
 
@@ -62,7 +74,12 @@ const App = () => {
         <Route
           path="/login"
           element={
-            <LoginPage toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+            <LoginPage
+              toggleDarkMode={toggleDarkMode}
+              darkMode={darkMode}
+              setIsAuthenticated={setIsAuthenticated}
+              setUser={setUser}
+            />
           }
         />
         <Route
