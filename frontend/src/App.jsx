@@ -7,6 +7,7 @@ import DirectoryPage from './pages/DirectoryPage'
 import ProfilePage from './pages/ProfilePage'
 import FeedPage from './pages/FeedPage'
 import Home from './components/Home'
+import PostPage from './pages/PostPage'
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true)
@@ -89,8 +90,15 @@ const App = () => {
           }
         />
         <Route path="/directory" element={<DirectoryPage />} />
-        <Route path="/profile/:id" element={<ProfilePage user={user} handleLogout={handleLogout} />} />
-        <Route path="/feed" element={<FeedPage isAuthenticated={isAuthenticated} />} />
+        <Route
+          path="/profile/:id"
+          element={<ProfilePage user={user} handleLogout={handleLogout} />}
+        />
+        <Route
+          path="/feed"
+          element={<FeedPage isAuthenticated={isAuthenticated} />}
+        />
+        <Route path="/createpost" element={<PostPage />} />
       </Routes>
     </>
   )
