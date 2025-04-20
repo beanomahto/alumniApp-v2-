@@ -62,16 +62,16 @@ const Navbar = ({
             ) : (
               <div className="flex items-center space-x-2">
                 <Link
-                  to="/profile"
+                  to={`/profile/${user._id}`}
                   className="flex items-center text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
                 >
                   {/* Profile Image Icon */}
                   <img
-                    src={user?.profileImage || '/default-avatar.png'}
-                    alt="Profile"
+                    src={user?.img || '/default-avatar.png'}
+                    // alt="Profile"
                     className="w-8 h-8 rounded-full mr-2"
                   />
-                  Profile
+                  {/* Profile */}
                 </Link>
                 <button
                   onClick={handleLogout}

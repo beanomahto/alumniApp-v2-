@@ -2,9 +2,9 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL
 
-const Login = () => {
+const Login = ({ setIsAuthenticated, setUser }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,8 +22,23 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(`${baseURL}/auth/signin`, formData);
-      alert("Login successful!");
+      const response = await axios.post(`${baseURL}/auth/signin`, formData)
+      console.log(response.data)
+      // localStorage.setItem('test', JSON.stringify({ hello: 'world' }))
+      // console.log(localStorage.getItem('test'))
+
+      try {
+        localStorage.setItem('user', JSON.stringify(response.data))
+        console.log('Saved to localStorage successfully')
+        console.log(JSON.parse(localStorage.getItem('user')))
+        setIsAuthenticated(true)
+        setUser(response.data)
+        navigate('/')
+      } catch (err) {
+        console.error('Error saving to localStorage:', err)
+      }
+
+      alert('Login successful!')
     } catch (err) {
       alert('Login failed. Please check your credentials.')
       console.error('Login error:', err)

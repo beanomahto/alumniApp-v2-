@@ -28,11 +28,7 @@ const DirectoryPage = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-<<<<<<< HEAD
-        `${import.meta.env.VITE_API_BASE_URL}/api/users/search`,
-=======
         `${baseURL}/users/search`,
->>>>>>> ec0cd56a517ed3f98cc89c27a6ab75d191b5174c
         {
           params: {
             name: searchQuery,
