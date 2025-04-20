@@ -3,13 +3,15 @@ import axios from 'axios'
 
 const Directory = ({ users = [] }) => {
   const navigate = useNavigate()
+  const baseURL = import.meta.env.VITE_API_BASE_URL //actual base URL was replaced with this variable
+  // const baseURL = "http://localhost:8000/api" // Uncomment this line if you want to use the actual base URL
 
-  const handleUserClick = async (e) => {
+  const handleUserClick = async (id) => {
     // window.location.href = http://localhost:8000/api/users/profile/${id};
     // navigate(/profile/${id}); // Uncomment this line if you want to use react-router for navigation
     // console.log(e);
-    const res = await axios.get(`http://localhost:8000/api/users/profile/${e}`)
-    navigate(`/profile/${e}`) // Uncomment this line if you want to use react-router for navigation
+    const res = await axios.get(`${baseURL}/users/profile/${id}`)
+    navigate(`/profile/${id}`) // Uncomment this line if you want to use react-router for navigation
     console.log(res.data)
   }
 

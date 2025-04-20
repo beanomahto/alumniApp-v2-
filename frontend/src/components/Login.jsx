@@ -2,7 +2,9 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const Login = ({ setIsAuthenticated, setUser }) => {
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,24 +22,8 @@ const Login = ({ setIsAuthenticated, setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post(
-        'http://localhost:8000/api/auth/signin',
-        formData
-      )
-
-      const token = res.data.token
-      const user = res.data.user
-
-      if (token && user && typeof user === 'object') {
-        localStorage.setItem('authToken', token)
-        localStorage.setItem('user', JSON.stringify(user))
-        setIsAuthenticated(true)
-        setUser(user)
-        alert('Login successful!')
-        navigate('/feed')
-      } else {
-        throw new Error('Invalid login response: missing token or user.')
-      }
+      await axios.post(`${baseURL}/auth/signin`, formData);
+      alert("Login successful!");
     } catch (err) {
       alert('Login failed. Please check your credentials.')
       console.error('Login error:', err)

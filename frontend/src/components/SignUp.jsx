@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -39,7 +39,7 @@ const SignUp = () => {
     }
 
     try {
-      await axios.post('http://localhost:8000/api/auth/signup', payload)
+      await axios.post(`${baseURL}/auth/signup`, payload)
       alert('Signup successful!')
     } catch (err) {
       alert('Signup failed.')

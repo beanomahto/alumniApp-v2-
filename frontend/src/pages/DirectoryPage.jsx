@@ -5,6 +5,9 @@ import dotenv from 'dotenv'
 
 // dotenv.config()
 
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;//replaced the actual base URL with this variable
+// const baseURL = "http://localhost:8000/api" // Uncomment this line if you want to use the actual base URL
 const DirectoryPage = () => {
   const [users, setUsers] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -25,7 +28,11 @@ const DirectoryPage = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
+<<<<<<< HEAD
         `${import.meta.env.VITE_API_BASE_URL}/api/users/search`,
+=======
+        `${baseURL}/users/search`,
+>>>>>>> ec0cd56a517ed3f98cc89c27a6ab75d191b5174c
         {
           params: {
             name: searchQuery,

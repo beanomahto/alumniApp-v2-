@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import Profile from '../components/Profile'
 import axios from 'axios'
 
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 // const dummyUser = {
 //   name: "John Doe",
 //   email: "john@example.com",
@@ -29,7 +31,7 @@ const ProfilePage = () => {
     async function fetchUsers() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/users/profile/${id}`
+          `${baseURL}/users/profile/${id}`
         )
         setUser(response.data)
       } catch (error) {
