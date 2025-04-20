@@ -2,6 +2,8 @@
 
 ![Project Structure](https://img.shields.io/badge/Project%20Structure-MERN%20Stack-blue)
 
+**[Project link](https://aluminiapp-five.vercel.app/)** 
+
 Reunite is a comprehensive alumni connection portal designed to help former students stay connected with their alma mater and fellow alumni. This platform facilitates networking, sharing updates, and maintaining professional relationships.
 
 ## Project Structure
