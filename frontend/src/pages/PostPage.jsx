@@ -1,15 +1,26 @@
 import { useNavigate } from 'react-router-dom'
 import Post from '../components/Post'
-// import axios from 'axios'
+import axios from 'axios'
+
+const baseURL = import.meta.env.VITE_API_BASE_URL
 
 const PostPage = () => {
   const navigate = useNavigate()
+  const token = JSON.parse(localStorage.getItem('authToken'))
 
   const handleSubmit = async (postData) => {
     try {
-      // const res = await axios.post('/api/posts', postData)
+      console.log('Post Data:', postData)
+      console.log(token)
+
+      await axios.post(`${baseURL}/users/posts`, postData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      // await axios.post(`${baseURL}/users/posts`, postData)
       console.log('Submitted Post:', postData)
-      navigate('/') // Go back to feed
+      navigate('/feed') // Go back to feed
     } catch (err) {
       console.error('Failed to submit post:', err)
     }

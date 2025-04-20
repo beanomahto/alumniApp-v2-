@@ -22,7 +22,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL
 //   },
 // };
 
-const ProfilePage = ({ handleLogout }) => {
+const ProfilePage = ({ loggedUser, handleLogout }) => {
   const { id } = useParams()
   const [user, setUser] = useState(null)
 
@@ -37,11 +37,11 @@ const ProfilePage = ({ handleLogout }) => {
     }
 
     fetchUsers()
-  }, [id])
+  }, [id, setUser])
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-4">
-      <Profile user={user} handleLogout={handleLogout} />
+      <Profile user={user} loggedUser={loggedUser} handleLogout={handleLogout} />
     </div>
   )
 }

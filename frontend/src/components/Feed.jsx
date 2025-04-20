@@ -1,39 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Heart, MessageCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
+import axios from 'axios'
 
-const dummyPosts = [
-  {
-    id: 1,
-    user: {
-      name: 'John Doe',
-      profilePicture: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    content: 'Excited to share that I started a new position at Google!',
-    tags: ['Hiring'],
-    likes: [],
-    comments: [],
-  },
-  {
-    id: 2,
-    user: {
-      name: 'Jane Smith',
-      profilePicture: 'https://randomuser.me/api/portraits/women/2.jpg',
-    },
-    content: 'Looking forward to the upcoming alumni meetup event in Delhi!',
-    tags: ['Event'],
-    likes: [],
-    comments: [],
-  },
-]
+const baseURL = import.meta.env.VITE_API_BASE_URL
 
-const Feed = () => {
-  const [posts, setPosts] = useState(dummyPosts)
+// const dummyPosts = [
+//   {
+//     id: 1,
+//     user: {
+//       name: 'John Doe',
+//       profilePicture: 'https://randomuser.me/api/portraits/men/1.jpg',
+//     },
+//     content: 'Excited to share that I started a new position at Google!',
+//     tags: ['Hiring'],
+//     likes: [],
+//     comments: [],
+//   },
+//   {
+//     id: 2,
+//     user: {
+//       name: 'Jane Smith',
+//       profilePicture: 'https://randomuser.me/api/portraits/women/2.jpg',
+//     },
+//     content: 'Looking forward to the upcoming alumni meetup event in Delhi!',
+//     tags: ['Event'],
+//     likes: [],
+//     comments: [],
+//   },
+// ]
+
+const Feed = ({posts, setPosts, user}) => {
+  // const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/users/posts/all`)
+        console.log(response)
+
+        setPosts(response.data.posts)
+      } catch (error) {
+        console.error('Error fetching posts:', error)
+      }
+    }
+    fetchPosts()
+  }, [])
 
   const toggleLike = (postId) => {
     setPosts((prev) =>
       prev.map((post) =>
-        post.id === postId
+        post._id === postId
           ? {
               ...post,
               likes: post.likes.length === 0 ? ['dummyUser'] : [],
@@ -47,7 +64,7 @@ const Feed = () => {
     if (!comment) return
     setPosts((prev) =>
       prev.map((post) =>
-        post.id === postId
+        post._id === postId
           ? {
               ...post,
               comments: [
@@ -66,15 +83,19 @@ const Feed = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 py-6 px-4">
+      {/* {console.log(posts)} */}
       <div className="max-w-2xl mx-auto space-y-6">
         {posts.map((post) => (
           <div
-            key={post.id}
+            key={post._id}
             className="bg-gray-800 shadow-lg rounded-lg p-4 space-y-4 border border-gray-700"
           >
             <div className="flex items-center space-x-4">
               <img
-                src={post.user.profilePicture}
+                src={
+                  post.user.profilePicture ||
+                  'https://th.bing.com/th/id/OIP.4Sf5Qzlwrq-0iNoydcGW0wHaLH?rs=1&pid=ImgDetMain'
+                }
                 alt={post.user.name}
                 className="w-10 h-10 rounded-full border-2 border-gray-600"
               />
@@ -101,7 +122,7 @@ const Feed = () => {
             <div className="flex items-center space-x-4 pt-2">
               <motion.button
                 whileTap={{ scale: 1.2 }}
-                onClick={() => toggleLike(post.id)}
+                onClick={() => toggleLike(post._id)}
                 className="flex items-center space-x-1 text-gray-400 hover:text-red-400"
               >
                 {post.likes.length > 0 ? (
@@ -122,7 +143,7 @@ const Feed = () => {
               onSubmit={(e) => {
                 e.preventDefault()
                 const comment = e.target.comment.value
-                addComment(post.id, comment)
+                addComment(post._id, comment)
                 e.target.reset()
               }}
               className="mt-2"

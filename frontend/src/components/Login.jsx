@@ -29,8 +29,11 @@ const Login = ({ setIsAuthenticated, setUser }) => {
 
       try {
         localStorage.setItem('user', JSON.stringify(response.data))
+        localStorage.setItem('authToken', JSON.stringify(response.data.token))
         console.log('Saved to localStorage successfully')
         console.log(JSON.parse(localStorage.getItem('user')))
+        console.log(JSON.parse(localStorage.getItem('authToken')))
+
         setIsAuthenticated(true)
         setUser(response.data)
         navigate('/')

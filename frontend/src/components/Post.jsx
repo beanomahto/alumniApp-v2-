@@ -14,7 +14,7 @@ const Post = ({ onSubmit }) => {
         .map((tag) => tag.trim())
         .filter((tag) => tag),
     }
-
+    
     onSubmit(postData)
   }
 

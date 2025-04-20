@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
-const Navbar = ({ toggleDarkMode, darkMode, isAuthenticated, user }) => {
+const Navbar = ({ toggleDarkMode, darkMode, isAuthenticated, user, handleLogout }) => {
   return (
     <nav className="p-4 bg-white dark:bg-gray-800 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto">
@@ -67,6 +67,12 @@ const Navbar = ({ toggleDarkMode, darkMode, isAuthenticated, user }) => {
                   />
                   {/* Profile */}
                 </Link>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 hover:bg-red-700 cursor-pointer text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Logout
+                </button>
               </div>
             )}
           </div>

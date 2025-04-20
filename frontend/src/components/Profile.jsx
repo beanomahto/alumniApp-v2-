@@ -1,4 +1,4 @@
-const Profile = ({ user, handleLogout }) => {
+const Profile = ({ user }) => {
   if (!user) return null
 
   return (
@@ -15,12 +15,9 @@ const Profile = ({ user, handleLogout }) => {
             {user.jobTitle} at {user.company}
           </p>
         </div>
-        <button
-          onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 cursor-pointer text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-        >
-          Logout
-        </button>
+        {/* {profileUser?._id === user?._id && ( */}
+          
+        {/* )} */}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
