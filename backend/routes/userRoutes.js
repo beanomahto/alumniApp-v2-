@@ -11,6 +11,8 @@ const {
   createPost,
   getUserPost,
   getAllPosts,
+  likePost,
+  commentOnPost,
 } = require("../controllers/userController");
 
 //CREATE USER
@@ -83,6 +85,8 @@ router.get("/profile/:id", getUserProfileById);
 router.post("/posts", protect, createPost); // Create a post
 router.get("/posts", protect, getUserPost); // Get all posts
 router.get("/posts/all", getAllPosts); // Get all posts
+router.post('/posts/:id/like',protect, likePost);
+router.post('/posts/:id/comment', protect, commentOnPost); // Comment on a post
 // Add more here later...
 
 //UPDATE USER
