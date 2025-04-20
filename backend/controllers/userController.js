@@ -199,7 +199,7 @@ const getAllPosts = async (req, res) => {
 
     // Find posts, sort by createdAt ascending, paginate, and populate user info
     const posts = await Post.find({})
-      .sort({ createdAt: 1 }) // Ascending order
+      .sort({ createdAt: -1 }) // Ascending order
       .skip(skip)
       .limit(limit)
       .populate("user", "name email");
