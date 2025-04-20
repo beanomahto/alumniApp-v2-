@@ -39,6 +39,10 @@ const Login = ({ setIsAuthenticated, setUser }) => {
       }
 
       alert('Login successful!')
+      // After successful login
+      // const location = useLocation()
+      // const from = location.state?.from || '/'
+      // navigate(from)
     } catch (err) {
       alert('Login failed. Please check your credentials.')
       console.error('Login error:', err)

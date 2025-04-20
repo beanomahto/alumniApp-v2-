@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Plus } from 'lucide-react'
 import Feed from '../components/Feed'
 
@@ -38,15 +38,11 @@ const dummyPosts = [
 
 const FeedPage = ({ isAuthenticated }) => {
   const [posts, setPosts] = useState([])
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   useEffect(() => {
     setPosts(dummyPosts)
   }, [])
-
-  const handleCreatePost = () => {
-    navigate(isAuthenticated ? '/createpost' : '/login')
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 dark:bg-gray-900 transition-colors duration-200 relative">
@@ -58,13 +54,13 @@ const FeedPage = ({ isAuthenticated }) => {
       </div>
 
       {/* Floating Create Post Button with Icon */}
-      <button
-        onClick={handleCreatePost}
+      <Link
+        to={isAuthenticated ? '/createpost' : '/login'}
         className="fixed bottom-6 right-6 cursor-pointer bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-200"
         aria-label="Create Post"
       >
         <Plus className="w-6 h-6" />
-      </button>
+      </Link>
     </div>
   )
 }
