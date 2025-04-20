@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +27,8 @@ const SignUp = () => {
     }))
   }
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = {
@@ -41,6 +44,7 @@ const SignUp = () => {
     try {
       await axios.post(`${baseURL}/auth/signup`, payload)
       alert('Signup successful!')
+      navigate('/login')
     } catch (err) {
       alert('Signup failed.')
       console.error(err)
